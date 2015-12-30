@@ -11,7 +11,7 @@ Recommended method of installation is via composer.
 ```
 {
   "require": {
-    "cyphrix/rpsls": "dev-master"
+    "cyphrix/rpsls": "1.0.0"
   }
 }
 ```
