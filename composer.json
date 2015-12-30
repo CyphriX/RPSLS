@@ -13,5 +13,7 @@
             "RPSLS\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "php": ">=5.5.0"
+    }
 }
