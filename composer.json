@@ -1,0 +1,17 @@
+{
+    "name": "cyphrix/rpsls",
+    "description": "Rock, Paper, Scissors, Lizard, Spock... Now with 100% more PHP.",
+    "version": "0.1",
+    "authors": [
+        {
+            "name": "Jason Swint",
+            "email": "cyphrix.2015@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RPSLS\\": "src/"
+        }
+    },
+    "require": {}
+}
