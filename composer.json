@@ -2,6 +2,7 @@
     "name": "cyphrix/rpsls",
     "description": "Rock, Paper, Scissors, Lizard, Spock... Now with 100% more PHP.",
     "version": "1.0.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jason Swint",
