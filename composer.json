@@ -1,7 +1,7 @@
 {
     "name": "cyphrix/rpsls",
     "description": "Rock, Paper, Scissors, Lizard, Spock... Now with 100% more PHP.",
-    "version": "0.1",
+    "version": "1.0.0";
     "authors": [
         {
             "name": "Jason Swint",
