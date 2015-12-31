@@ -25,6 +25,8 @@ class Match
         if ($this->player1->getPlayerID() == $this->player2->getPlayerID()) {
             throw new MatchException('Must use two different players');
         }
+        $this->winner = $this->getWinner();
+        $this->loser = $this->getLoser();
         return $this;
     }
 
@@ -37,29 +39,50 @@ class Match
         $gesture1 = $gestures[0];
         $gesture2 = $gestures[1];
 
+        // determine which value is higher, or if they match
         $val = $gesture1['value'] - $gesture2['value'];
-        $valMatch = ($val == 0);
-        $parityMatch = ($gesture1['parity'] == $gesture2['parity']);
         $p1ValLower = ($val < 0);
         $p1ValHigher = ($val > 0);
+        $valMatch = ($val == 0);
+        // determine if parity match [even, even] or [odd, odd]
+        $parityMatch = ($gesture1['parity'] == $gesture2['parity']);
 
         if ($valMatch) {
-            return 0;
+            // values match. DRAW
+            $winner = 0;
         }
         else if ($parityMatch) {
+            // parity match - lowest value wins
             if ($p1ValLower) {
-                return $this->player1;
+                $winner = $this->player1;
             } else {
-                return $this->player2;
+                $winner = $this->player2;
             }
         }
         else {
+            // parity mismatch - highest value wins
             if ($p1ValHigher) {
-                return $this->player1;
+                $winner = $this->player1;
             } else {
-                return $this->player2;
+                $winner = $this->player2;
             }
         }
+        $this->winner = $winner;
+        return $winner;
+    }
+
+    public function getLoser() {
+        // check for draw
+        if (!$this->winner instanceof Player) {
+            $loser = 0;
+        }
+        // determine who isn't the winner... AKA the loser
+        else if ($this->winner->getPlayerID() != $this->player1->getPlayerID()) {
+            $loser = $this->player1;
+        } else {
+            $loser = $this->player2;
+        }
+        return $loser;
     }
 
     /**
