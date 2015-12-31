@@ -7,7 +7,7 @@ use RPSLS\Turn;
 use RPSLS\Gesture;
 use RPSLS\Match;
 
-$player1 = new Player(1, 'Jason', true);
+$player1 = new Player(1, 'Jason');
 $player2 = new Player(2, 'Computer', true);
 
 $match = new Match(
@@ -15,7 +15,7 @@ $match = new Match(
     new Turn($player2, new Gesture(Gesture::getRandomGesture()))
 );
 
-echo "And the winner is... " . $match->getWinner();
+print $match->getWinner() . ' ' . $match->getLoser();
 
 ?>
 
