@@ -6,12 +6,9 @@ RPSLS is an open-source, object-oriented implementation of the Rock, Paper, Scis
 
 #### Installation
 
-Recommended method of installation is via composer.
+Recommended method of installation is via composer:
 
 ```
-{
-  "require": {
-    "cyphrix/rpsls": "1.0.0"
-  }
-}
+composer require cyphrix/rpsls
 ```
+

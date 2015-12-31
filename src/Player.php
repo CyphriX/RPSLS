@@ -50,4 +50,9 @@ class Player
     {
         return $this->playerID;
     }
+
+    public function __toString()
+    {
+        return $this->playerName;
+    }
 }

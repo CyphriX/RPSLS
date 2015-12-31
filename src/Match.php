@@ -6,8 +6,9 @@ class MatchException extends \Exception
 
 class Match
 {
-    protected $turn1 = null;
-    protected $turn2 = null;
+    protected $turn1;
+    protected $turn2;
+    protected $winner;
 
     /**
      * Match constructor.
@@ -18,54 +19,68 @@ class Match
     {
         $this->turn1 = $turn1;
         $this->turn2 = $turn2;
-        $this->player1 = $turn1->getPlayer()->getPlayerID();
-        $this->player2 = $turn2->getPlayer()->getPlayerID();
+        $this->player1 = $turn1->getPlayer();
+        $this->player2 = $turn2->getPlayer();
 
-        if ($this->player1 == $this->player2) {
+        if ($this->player1->getPlayerID() == $this->player2->getPlayerID()) {
             throw new MatchException('Must use two different players');
         }
         return $this;
     }
 
     /**
-     * Get the results of the match.
-     * @return integer
+     * Get the winner of the match.
+     * @return Player
      */
-    public function getResult()
-    {
-        $gesture1 = $this->turn1->getGesture();
-        $gesture2 = $this->turn2->getGesture();
-        $player1id = $this->player1;
-        $player2id = $this->player2;
+    public function getWinner() {
+        $gestures = $this->getGestures();
+        $gesture1 = $gestures[0];
+        $gesture2 = $gestures[1];
 
-        // subtract value 2 from value 1 to determine which (if any) is higher
-        $val = $gesture1->getValue() - $gesture2->getValue();
-        // check to see if both even, or both odd
-        $parityMatch = $gesture1->getParity() == $gesture2->getParity();
+        $val = $gesture1['value'] - $gesture2['value'];
+        $valMatch = ($val == 0);
+        $parityMatch = ($gesture1['parity'] == $gesture2['parity']);
+        $p1ValLower = ($val < 0);
+        $p1ValHigher = ($val > 0);
 
-        // here comes all the fun game logic... SPOCK will be pleased
-        if ($val == 0) {
-            // values are identical - DRAW
+        if ($valMatch) {
             return 0;
-        } elseif ($parityMatch) {
-            // parity matches ([even, even] or [odd, odd])
-            if ($val < 0) {
-                // player 1 value lower - player 1 wins
-                return $player1id;
+        }
+        else if ($parityMatch) {
+            if ($p1ValLower) {
+                return $this->player1;
             } else {
-                // player 2 value lower - player 2 wins
-                return $player2id;
-            }
-        } else {
-            // parity does not match ([even, odd] or [odd, even])
-            if ($val > 0) {
-                // player 1 value higher - player 1 wins
-                return $player1id;
-            } else {
-                // player 2 value higher - player 2 wins
-                return $player2id;
+                return $this->player2;
             }
         }
+        else {
+            if ($p1ValHigher) {
+                return $this->player1;
+            } else {
+                return $this->player2;
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getGestures() {
+        $gesture1 = $this->turn1->getGesture();
+        $gesture2 = $this->turn2->getGesture();
+
+        return [
+          [
+              'name' => $gesture1->getName(),
+              'value' => $gesture1->getValue(),
+              'parity' => $gesture1->getParity()
+          ],
+          [
+              'name' => $gesture2->getName(),
+              'value' => $gesture2->getValue(),
+              'parity' => $gesture2->getParity()
+          ]
+        ];
     }
 
 }
