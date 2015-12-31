@@ -17,11 +17,6 @@ class Player
      */
     function __construct($playerID, $playerName, $AI = false)
     {
-        /* do not allow '0' as player id, as this
-           interferes with match result for DRAWs */
-        if((integer) $playerID == 0) {
-            throw new PlayerException('Player ID must be integer and may not be 0.');
-        }
         $this->playerID = (integer) $playerID;
         $this->playerName = (string) $playerName;
         $this->AI = (bool) $AI;
